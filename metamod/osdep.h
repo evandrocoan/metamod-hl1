@@ -57,7 +57,7 @@ extern mBOOL dlclose_handle_invalid;
 #  else
 	#define PLATFORM_SPC	"lin32"
 #  endif
-#elif defined(_WIN32)
+#elif defined(_WIN32) || defined(__CYGWIN__)
 	#define PLATFORM		"mswin"
 	#define PLATFORM_SPC	"win32"
 #elif defined(__APPLE__)
@@ -488,7 +488,7 @@ inline int is_absolute_path(const char *path) {
 	return(FALSE);
 }
 
-#ifdef _WIN32
+#ifdef _WIN32 || defined(__CYGWIN__)
 // Buffer pointed to by resolved_name is assumed to be able to store a
 // string of PATH_MAX length.
 inline char *realpath(const char *file_name, char *resolved_name) {
@@ -520,7 +520,7 @@ inline char *realpath(const char *file_name, char *resolved_name) {
 inline const char *str_os_error(void) {
 #if defined(__linux) || defined(__APPLE__)
 	return(strerror(errno));
-#elif defined(_WIN32)
+#elif defined(_WIN32) || defined(__CYGWIN__)
 	return(str_GetLastError());
 #endif /* _WIN32 */
 }
